@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ShopContext } from "../context/Shopcontext";
 
-function Product() {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+const Product = () => {
+  const { productId } = useParams;
+  const { products } = useContext(ShopContext);
+  const { productData, setProductData } = useState(flase);
+  const fetchProductData = async () => {};
 
-export default Product
+  useEffect(() => {
+    fetchProductData();
+  }, [productId]);
+  return <div></div>;
+};
+
+export default Product;

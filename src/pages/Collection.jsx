@@ -5,46 +5,59 @@ import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
 
 const Collection = () => {
-  const { products } = useContext(ShopContext);
+  const { products, search, showSearch } = useContext(ShopContext);
   const [showFilter, setshowFilter] = useState(false);
   const [filterProducts, setfilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setsubCategory] = useState([]);
+  const [sortType, setsortType] = useState(["relevant"]);
 
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
       setCategory((prev) => prev.filter((item) => item !== e.target.value));
     } else setCategory((prev) => [...prev, e.target.value]);
   };
- const applyFilter = () => {
-
-  let productsCopy = products.slice();
-
-  
-  if (category.length > 0) {
-    productsCopy = productsCopy.filter(item =>
-      category.includes(item.category)
+  const applyFilter = () => {
+    let productsCopy = products.slice();
+    productsCopy = productsCopy.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
     );
-  }
-if (subCategory.length> 0){
-  productsCopy = productsCopy.filter(item =>
-    subCategory.includes(item.subCategory)
-  );
-}
-  
-  setfilterProducts(productsCopy);
-};
 
+    if (category.length > 0) {
+      productsCopy = productsCopy.filter((item) =>
+        category.includes(item.category)
+      );
+    }
+    if (subCategory.length > 0) {
+      productsCopy = productsCopy.filter((item) =>
+        subCategory.includes(item.subCategory)
+      );
+    }
 
+    setfilterProducts(productsCopy);
+  };
 
-
-  useEffect(() => {
-    setfilterProducts(products);
-  }, []);
-
+  const sortProduct = () => {
+    let fpcopy = filterProducts.slice();
+    switch (sortType) {
+      case "low-high":
+        setfilterProducts(fpcopy.sort((a, b) => a.price - b.price));
+        break;
+      case "high-low":
+        setfilterProducts(fpcopy.sort((a, b) => b.price - a.price));
+        break;
+      default:
+        applyFilter();
+        break;
+    }
+  };
   useEffect(() => {
     applyFilter();
-  }, [category, subCategory]);
+  }, [category, subCategory,search,showSearch]);
+
+  useEffect(() => {
+    sortProduct();
+  }, [sortType]);
 
   useEffect(() => {
     console.log(category);
@@ -121,12 +134,12 @@ if (subCategory.length> 0){
           <p className="mb-3 text-sm font-medium ">TYPE</p>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
             <p className="flex gap-2">
-             <input
-  className="w-3"
-  type="checkbox"
-  value={"Topwear"} // This must match the data exactly
-  onChange={toggleSubCategory}
-/>{" "}
+              <input
+                className="w-3"
+                type="checkbox"
+                value={"Topwear"} // This must match the data exactly
+                onChange={toggleSubCategory}
+              />{" "}
               Top Wear
             </p>
             <p className="flex gap-2">
@@ -154,7 +167,10 @@ if (subCategory.length> 0){
       <div className="flex-1">
         <div className="flex justify-between text-base sm:text-2xl mb-4">
           <Title text1={"All"} text2={"Collection"} />
-          <select className="border-2 border-gray-200 text-sm px-2">
+          <select
+            onChange={(e) => setsortType(e.target.value)}
+            className="border-2 border-gray-200 text-sm px-2"
+          >
             <option value="relevant">Sort by: Relevant</option>
             <option value="low-high">Sort by: Low-High</option>
             <option value="high-low">Sort by: High-Low</option>
