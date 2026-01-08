@@ -2,14 +2,17 @@ import { createContext, useEffect, useState } from "react";
 import { products } from "../assets/assets";
 export const ShopContext = createContext();
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 const ShopContextProvider = (props) => {
   const currency = "$";
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showsearch, setShowSearch] = useState(false);
+  const navigate = useNavigate();
 
   const [cartItems, setCartItems] = useState({});
-  const addToCart = async (itemId, size) => {
+  const addToCart = (itemId, size) => {
     if (!size) {
       toast.error("select product size");
       return;
@@ -46,7 +49,7 @@ const ShopContextProvider = (props) => {
     cartData[itemId][size] = quantity;
     setCartItems(cartData);
   };
-  const getCartAmount = async () => {
+  const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
       let itemInfo = products.find((products) => products._id === items);
@@ -74,6 +77,7 @@ const ShopContextProvider = (props) => {
     addToCart,
     updateQuantity,
     getCartAmount,
+    navigate
   };
 
   return (
