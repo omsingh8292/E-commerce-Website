@@ -18,6 +18,4 @@ app.get("/", (req, res) => {
 
 app.listen(port,()=>console.log('Server started on PORT:'+port));
 
-
-// this thing is  not working at all and the description is to define the forecast of the region snd sll the task areassociated the reunion of the work
-// the hings is to do nothing
+// the thing is to define the all the tet
