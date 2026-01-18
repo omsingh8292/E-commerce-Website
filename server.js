@@ -22,4 +22,8 @@ app.listen(port,()=>console.log('Server started on PORT:'+port));
 
 
 
-// deploy  all the wrok and allow all theri context in he file and acknowledge heri perfection an allow all the task and their data is to allow the tassk for its future
+// deploy  all the wrok and allow all theri context in he file and ac
+// 
+
+// im not able to solve my question which i solved inmy past
+//knowledge heri perfection an allow all the task and their data is to allow the tassk for its future
