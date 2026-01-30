@@ -1,14 +1,21 @@
-// routes user cintrolling
-const loginUser = async (res, req) => {};
+import UserModel from "../models/UserModel.js";
 
-// Route user for register
-const registerUser = async (res, req) => {};
+export const registerUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-// Route for admin login
+    // check if user already exists
+    const exists = await UserModel.findOne({ email });
+    if (exists) {
+      return res.json({ success: false, message: "User already exists" });
+    }
 
-const adminLogin = async(res,req)=>{
+    // create new user
+    const newUser = await UserModel.create({ name, email, password });
 
-}
-
-
-export {loginUser,registerUser,adminLogin }
+    res.json({ success: true, message: "User registered successfully", user: newUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
