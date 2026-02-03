@@ -25,3 +25,4 @@ const singleproducts = async (req,res) =>{
 export {addproducts,listproducts,removeproducts,singleproducts}
 
 /// the data arekepr privvate
+// the thing is capture and denied by other
