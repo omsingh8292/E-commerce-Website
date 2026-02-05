@@ -9,3 +9,5 @@ const connectcloudinary = async () => {
 
 export default connectcloudinary;
 // this is that for all the devlopment
+// the dat are kept under the survillance and all the data are monitorized by the sma session and allow all the text a
+//forgetton through tits own entitiy
