@@ -13,3 +13,4 @@ export default connectcloudinary;
 
 // hello everyone myself om singh and i'm fronn the star city thatarecontinue through the all data re kept under the all continue section
 //helllo everyone be a  good person for no reason
+// all the dat are considered for the alll through its runner
