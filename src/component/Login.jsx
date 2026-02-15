@@ -1,23 +1,48 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+const backendUrl = "http://localhost:4000";
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  const handleLogin = async (e) => {
+  e.preventDefault();
 
-    // Dummy login (change later with backend)
-    if (email === "admin@gmail.com" && password === "1234") {
-      setToken("admin-token");
+  try {
+    console.log("LOGIN BUTTON CLICKED");
+
+    const response = await axios.post(
+      backendUrl + "/api/user/admin-login",
+      { email, password }
+    );
+
+    console.log("SERVER RESPONSE:", response.data);
+
+    if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("adminToken", response.data.token);
+      console.log("TOKEN SAVED");
     } else {
-      alert("Wrong Email or Password");
+      toast.error(response.data.message);
     }
-  };
+
+  } catch (error) {
+    console.log("ERROR:", error.response?.data || error.message);
+    toast.error("Login failed");
+  }
+};
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-96">
+      <form
+        onSubmit={handleLogin}
+        className="bg-white p-8 rounded-lg shadow-md w-96"
+      >
         <h2 className="text-2xl font-bold text-center mb-6">Admin Panel</h2>
 
         <div className="mb-4">
