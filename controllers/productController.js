@@ -1,6 +1,9 @@
 import productmodel from "../models/productmodel.js";
 import cloudinary from "cloudinary";
 
+
+
+
 // ADD PRODUCT
 export const addproducts = async (req, res) => {
   try {

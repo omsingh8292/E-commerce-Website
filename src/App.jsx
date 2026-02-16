@@ -1,40 +1,47 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Collection from "./pages/Collection";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Product from "./pages/Product";
-import Cart from "./pages/Cart";
-import Login from "./pages/Login";
-import Placeorder from "./pages/Placeorder";
+import React, { useState } from "react";
+import Navbar from "./component/Navbar";
+import Sidebar from "./component/Sidebar";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Add from "./pages/Add";
+import List from "./pages/List";
 import Orders from "./pages/Orders";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import Search from "./components/Search";
- import { ToastContainer, toast } from 'react-toastify';
- 
+import Login from "./component/Login";
 
-function App() {
+
+
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+const App = () => {
+  const [token, setToken] = useState(localStorage.getItem("adminToken") || "");
+
+  if (!token) {
+    // Show login if no token
+    return (
+      <div className="bg-gray-50 min-h-screen">
+        <ToastContainer />
+        <Login />
+      </div>
+    );
+  }
+
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+    <div className="bg-gray-50 min-h-screen">
       <ToastContainer />
-      <Navbar />
-      <Search />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/collection" element={<Collection />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/product/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/place-order" element={<Placeorder />} />
-        <Route path="/orders" element={<Orders />} />
-      </Routes>
-      <Footer />
+      <Navbar  />
+      <hr />
+      <div className="flex w-full">
+        <Sidebar />
+        <div className="w-[70%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base">
+          <Routes>
+            <Route path="/" element={<Navigate to="/add" replace />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/list" element={<List />} />
+            <Route path="/orders" element={<Orders />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
