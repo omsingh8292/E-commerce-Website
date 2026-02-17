@@ -70,6 +70,17 @@ export const loginUser = async (req, res) => {
   }
 };
 
-export const adminLogin = (req, res) => {
-  res.json({ msg: "Admin API WORKING" });
+export const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (
+    email === process.env.ADMIN_EMAIL &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    const token = jwt.sign({ role: "admin" }, process.env.JWT_SECRET);
+    return res.json({ success: true, token });
+  } else {
+    return res.json({ success: false, message: "Invalid Admin Credentials" });
+  }
 };
+

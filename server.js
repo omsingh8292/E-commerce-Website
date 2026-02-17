@@ -5,6 +5,9 @@ import connectDB from "./config/mongodb.js";
 import connectcloudinary from "./config/Cloudinary.js";
 import userRouter from "./routes/userRoute.js"; // make sure filename matches exactly
 import productRouter from "./routes/productRoute.js";
+import path from "path";
+
+
 
 
 const app = express();
@@ -12,6 +15,7 @@ const port = process.env.PORT || 4000;
 
 connectDB();
 connectcloudinary();
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // Middlewares
 app.use(express.json());
