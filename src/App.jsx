@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 
+// the tree is clean
+
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 export const currency = "$"
 
