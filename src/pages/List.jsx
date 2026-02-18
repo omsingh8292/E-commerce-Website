@@ -59,7 +59,7 @@ const List = ({ token }) => {
           <b className="text-center">Action</b>
         </div>
 
-        {list.map((item, index) => (
+{Array.isArray(list) && list.map((item, index) => (
           <div
             key={index}
             className="grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center gap-2 py-1 px-2 border text-sm"
