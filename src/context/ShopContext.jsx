@@ -11,6 +11,7 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showsearch, setShowSearch] = useState(false);
   const [products, setProducts] = useState([]);
+  const [tokens,setTokens] =useState('');
   const navigate = useNavigate();
 
   const [cartItems, setCartItems] = useState({});
@@ -67,14 +68,20 @@ const ShopContextProvider = (props) => {
   };
 
   const getProductsData = async () => {
-  try {
-    const response = await axios.get("http://localhost:4000/api/product/list");
-    setProducts(response.data.products); // ⚡ use .products
-  } catch (error) {
-    console.error("Error fetching products:", error.message);
-  }
-};
-
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/product/list",
+      );
+      if (response.data.success) {
+        setProducts(response.data.products);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  };
 
   useEffect(() => {
     getProductsData();
@@ -94,6 +101,7 @@ const ShopContextProvider = (props) => {
     getCartAmount,
     navigate,
     backendUrl,
+    setTokens,tokens
   };
 
   return (
