@@ -240,5 +240,6 @@ const Add = ({ token }) => {
     </form>
   );
 };
+/// the all thigs got merged
 
 export default Add;

@@ -77,5 +77,4 @@ const Login = ({ setToken }) => {
     </div>
   );
 };
-/// the data are converted into the code and displlay very guranteed
 export default Login;
